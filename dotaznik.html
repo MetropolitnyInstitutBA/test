@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bratislava 2050</title>
+    <style>
+        body {
+            font-family: Tahoma, Geneva, sans-serif;
+            margin: 0;
+            background: url('C:/test/MIB_Logo-modré.png') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            overflow: hidden;
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9); 
+            z-index: -1; 
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #444;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+        .question {
+            margin-bottom: 15px;
+            display: none; 
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .question.active {
+            display: block;
+            opacity: 1;
+        }
+        .question label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .question input[type="radio"] {
+            margin-right: 10px;
+        }
+        .next-button {
+            display: none;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #cccccc;
+            border: none;
+            border-radius: 5px;
+            color: #000; 
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .result {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #e0e0e0;
+            color: #000;
+            display: none; 
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .result.success {
+            background-color: #aaff80;
+        }
+        .result.warning {
+            background-color: #ff8093;
+        }
+        .result.danger {
+            background-color: #f2182e;
+        }
+        .result img {
+            display: block;
+            margin: 10px auto;
+            max-width: 400px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay"></div>
+
+    <h1>Bratislava 2050</h1>
+
+    <form id="quizForm">
+        <div class="question active">
+            <label>1. Čo považujete za najväčšie výzvy súčasnosti?</label>
+            <input type="radio" name="q1" value="1"> klimatická zmena a jej dôsledky<br>
+            <input type="radio" name="q1" value="3"> rozvoj automobilovej dopravy<br>
+            <input type="radio" name="q1" value="2"> posilnenie občianskej vybavenosti a bývania<br>
+        </div>
+        <div class="question">
+            <label>2. Kde najradšej trávite voľný čas?</label>
+            <input type="radio" name="q2" value="3"> v priemyselnom areály<br>
+            <input type="radio" name="q2" value="1"> v prírode<br>
+            <input type="radio" name="q2" value="2"> na nákupoch<br>
+        </div>
+        <div class="question">
+            <label>3. Rozvoj v meste by sa mal zamieravať najmä na:</label>
+            <input type="radio" name="q3" value="1"> kvalitu života a životné prostredie<br>
+            <input type="radio" name="q3" value="2"> vyhovuje mi súčasný stav<br>
+            <input type="radio" name="q3" value="3"> ekonomický a sociálny rozvoj<br>
+        </div>
+        <button type="button" class="next-button" onclick="showNextQuestion()">Pokračovať</button>
+    </form>
+
+    <div id="result" class="result"></div>
+
+    <script>
+        let currentQuestion = 0;
+        const questions = document.querySelectorAll('.question');
+        const nextButton = document.querySelector('.next-button');
+        const resultDiv = document.getElementById('result');
+
+        // Zobrazenie ďalšej otázky
+        function showNextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                questions[currentQuestion].classList.remove('active');
+                nextButton.style.display = 'none'; // Skryť tlačidlo po zobrazení ďalšej otázky
+                currentQuestion++;
+                questions[currentQuestion].classList.add('active');
+            } else {
+                calculateResult(); // Vypočítanie výsledku po poslednej otázke
+            }
+        }
+
+        // Funkcia na vypočítanie výsledku
+        function calculateResult() {
+            var form = document.forms['quizForm'];
+            var totalScore = 0;
+            
+            for (var i = 1; i <= 3; i++) {
+                var radios = form['q' + i];
+                for (var j = 0; j < radios.length; j++) {
+                    if (radios[j].checked) {
+                        totalScore += parseInt(radios[j].value);
+                    }
+                }
+            }
+
+            let resultText;
+            let resultImage = ''; // Prázdny reťazec na zobrazenie GIF-u
+            if (totalScore <= 4) {
+                resultText = '<h2>udržateľná Bratislava</h2><br><a href="https://geoportal.bratislava.sk/pfa/apps/storymaps/stories/0b1c183f6cf74a86884ba250f95a6d69" target="_blank" style="color: #000; text-decoration: underline;">Viac informácií o Bratislave 2050</a>';
+                resultDiv.className = 'result success';
+                resultImage = '<img src="https://dtlive.s3.ap-south-1.amazonaws.com/16151/DT_G41_Ecology-and-Environment-Animated-GIF-Icon-pack.gif" alt="udržateľná Bratislava">'; 
+            } else if (totalScore <= 7) {
+                resultText = '<h2>zotrvanie v súčasnom smerovaní</h2><br><a href="https://geoportal.bratislava.sk/pfa/apps/storymaps/stories/0b1c183f6cf74a86884ba250f95a6d69" target="_blank" style="color: #000; text-decoration: underline;">Viac informácií o Bratislave 2050</a>';
+                resultImage = '<img src="https://dtlive.s3.ap-south-1.amazonaws.com/16196/DT_G46Environment-Animated-GIF-Icon-pack.gif" alt="zotrvanie v súčasnom smerovaní">'; 
+                resultDiv.className = 'result warning';
+            } else {
+                resultText = '<h2>silný ekonomický rozvoj na úkor životného prostredia</h2><br><a href="https://geoportal.bratislava.sk/pfa/apps/storymaps/stories/0b1c183f6cf74a86884ba250f95a6d69" target="_blank" style="color: #000; text-decoration: underline;">Viac informácií o Bratislave 2050</a>';
+                resultImage = '<img src="https://dtlive.s3.ap-south-1.amazonaws.com/17510/Pollution-Animated-GIF-Icon-Pack.gif" alt="silný ekonomický rozvoj na úkor životného prostredia">'; 
+                resultDiv.className = 'result danger';
+            }
+            
+            resultDiv.innerHTML = resultText + resultImage;
+            resultDiv.style.display = 'block';
+            setTimeout(() => resultDiv.style.opacity = 1, 10); // Efekt pre zobrazenie výsledku
+            
+            // Skryť formulár po zobrazení výsledku
+            document.getElementById('quizForm').style.display = 'none';
+        }
+
+        // Pridanie event listenera pre každú otázku
+        questions.forEach((question, index) => {
+            const radios = question.querySelectorAll('input[type="radio"]');
+            radios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    nextButton.style.display = 'block'; // Zobraziť tlačidlo po výbere odpovede
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

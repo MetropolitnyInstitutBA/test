@@ -156,15 +156,15 @@
             let resultText;
             let resultImage = ''; // Prázdny reťazec na zobrazenie GIF-u
             if (totalScore <= 4) {
-                resultText = '<h2>udržateľná Bratislava</h2><br><a href="https://geoportal.bratislava.sk/pfa/apps/storymaps/stories/0b1c183f6cf74a86884ba250f95a6d69" target="_blank" style="color: #000; text-decoration: underline;">Viac informácií o Bratislave 2050</a>';
+                resultText = '<h2>udržateľná Bratislava</h2><br><a href="https://geoportal.bratislava.sk/pfa/apps/storymaps/stories/0b1c183f6cf74a86884ba250f95a6d69" target="_blank" style="color: #000; text-decoration: underline;">Viac informácií o udržateľnom scenári Bratislave 2050</a>';
                 resultDiv.className = 'result success';
                 resultImage = '<img src="https://dtlive.s3.ap-south-1.amazonaws.com/16151/DT_G41_Ecology-and-Environment-Animated-GIF-Icon-pack.gif" alt="udržateľná Bratislava">'; 
             } else if (totalScore <= 7) {
-                resultText = '<h2>zotrvanie v súčasnom smerovaní</h2><br><a href="https://geoportal.bratislava.sk/pfa/apps/storymaps/stories/0b1c183f6cf74a86884ba250f95a6d69" target="_blank" style="color: #000; text-decoration: underline;">Viac informácií o Bratislave 2050</a>';
+                resultText = '<h2>zotrvanie v súčasnom smerovaní</h2><br><a href="https://geoportal.bratislava.sk/pfa/apps/storymaps/stories/0b1c183f6cf74a86884ba250f95a6d69" target="_blank" style="color: #000; text-decoration: underline;">Viac informácií o referenčnom scenári pre Bratislave 2050</a>';
                 resultImage = '<img src="https://dtlive.s3.ap-south-1.amazonaws.com/16196/DT_G46Environment-Animated-GIF-Icon-pack.gif" alt="zotrvanie v súčasnom smerovaní">'; 
                 resultDiv.className = 'result warning';
             } else {
-                resultText = '<h2>silný ekonomický rozvoj na úkor životného prostredia</h2><br><a href="https://geoportal.bratislava.sk/pfa/apps/storymaps/stories/0b1c183f6cf74a86884ba250f95a6d69" target="_blank" style="color: #000; text-decoration: underline;">Viac informácií o Bratislave 2050</a>';
+                resultText = '<h2>silný ekonomický rozvoj na úkor životného prostredia</h2><br><a href="https://geoportal.bratislava.sk/pfa/apps/storymaps/stories/0b1c183f6cf74a86884ba250f95a6d69" target="_blank" style="color: #000; text-decoration: underline;">Viac informácií o nepriaznivom scenári pre Bratislave 2050</a>';
                 resultImage = '<img src="https://dtlive.s3.ap-south-1.amazonaws.com/17510/Pollution-Animated-GIF-Icon-Pack.gif" alt="silný ekonomický rozvoj na úkor životného prostredia">'; 
                 resultDiv.className = 'result danger';
             }
